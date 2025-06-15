@@ -1,0 +1,16 @@
+# OS-generated files
+.DS_Store
+
+# Python bytecode and cache
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+
+# Logs and output
+logs/
+output.txt
+
+# Test cache
+.pytest_cache/
