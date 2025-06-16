@@ -35,3 +35,27 @@ def fetch_article_text(article_url):
     except Exception as e:
         logging.error("Failed to fetch article content from article URL")
         return None
+    
+def fetch_post_metadata(post_ids: list[int]) -> list[dict]:
+    metadata = []
+
+    for post_id in post_ids:
+        endpoint = POST_ENDPOINT.format(post_id=post_id)
+        response = requests.get(endpoint)
+        response.raise_for_status()
+        data = response.json()
+
+        try:
+            metadata.append({
+                "id" : post_id,
+                "title" : data.get("title", "No Title"),
+                "upvotes" : data.get("score", 0),
+                "comments" : data.get("descendents", 0),
+                "url" : data.get("url", "No URL")
+
+            })
+        except Exception as e:
+            logging.warning(f"Skipping post due to error: {e}")
+            continue
+
+    return metadata
