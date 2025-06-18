@@ -50,7 +50,7 @@ def fetch_post_metadata(post_ids: list[int]) -> list[dict]:
                 "id" : post_id,
                 "title" : data.get("title", "No Title"),
                 "upvotes" : data.get("score", 0),
-                "comments" : data.get("descendents", 0),
+                "comments" : data.get("descendants", 0),
                 "url" : data.get("url", "No URL")
 
             })

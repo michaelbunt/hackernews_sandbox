@@ -8,12 +8,14 @@ from config import POST_PERMALINK
 from fetch import fetch_post_details, fetch_post_ids, fetch_article_text, fetch_post_metadata
 from summarize import summarize_text
 from utils import refresh_output_file, update_output_file
+from agent import SummarizerAgent
 
 def parse_args():
     parser = argparse.ArgumentParser(description = "Summarize top HackerNews posts")
-    parser.add_argument("--posts", type=int, default=3, help="Number of top posts to summarize")
+    parser.add_argument("--posts", type=int, default=3, help="Number of top posts  from candidate posts to summarize")
     parser.add_argument("--output", type=str, default="output.txt", help="File path to output file containing summaries")
     parser.add_argument("--level", type=str, default="INFO", help="Log level")
+    parser.add_argument("--candidates", type=int, default=30, help="Number of candidate posts to sort through")
     return parser.parse_args()
 
 args=parse_args()
@@ -43,8 +45,11 @@ def setup_openai_key():
 def main(args):
     refresh_output_file(args.posts, args.output)
 
-    top_post_ids = fetch_post_ids(args.posts)
-    metadata = fetch_post_metadata(top_post_ids)
+    candidate_post_ids = fetch_post_ids(args.candidates)
+    metadata_all = fetch_post_metadata(candidate_post_ids)
+
+    agent = SummarizerAgent()
+    metadata = agent.choose_posts_with_llm(metadata_all, args.posts)
 
     for post in metadata:
         post_id = post["id"]
@@ -72,5 +77,5 @@ if __name__ == "__main__":
     args = parse_args()
     setup_logging(args)
     setup_openai_key()
-    logging.info(f"CLI Args: posts = {args.posts}, output = {args.output}, level = {args.level}")
+    logging.info(f"CLI Args: candidates = {args.candidates}, posts = {args.posts}, output = {args.output}, level = {args.level}")
     main(args)
