@@ -9,6 +9,7 @@ from fetch import fetch_post_details, fetch_post_ids, fetch_article_text, fetch_
 from summarize import summarize_text
 from utils import refresh_output_file, update_output_file
 from agent import SummarizerAgent
+from db import init_db, insert_row
 
 def parse_args():
     parser = argparse.ArgumentParser(description = "Summarize top HackerNews posts")
@@ -70,10 +71,13 @@ def main(args):
             logging.error(f"Unable to retrieve post summary for post id: {post_id}")
             continue
         
+        post["summary"] = summary
+        insert_row(post)
         logging.info(f"Summary: {summary}")
         update_output_file(title, post_url, article_url, args.output, summary)
 
 if __name__ == "__main__":
+    init_db()
     args = parse_args()
     setup_logging(args)
     setup_openai_key()
