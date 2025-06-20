@@ -12,17 +12,6 @@ def fetch_post_ids(limit):
     except requests.exceptions.RequestException as e:
         logging.critical(f"Failed to fetch post ids: {e}")
         raise
-    
-    
-# retrieve post details using post id
-def fetch_post_details(post_id):
-    try:
-        response = requests.get(POST_ENDPOINT.format(post_id = post_id))
-        response.raise_for_status()
-        return response.json()
-    except Exception as e:
-        logging.error(f"Unable to get post details")
-        return None
 
 def fetch_article_text(article_url):
     try:

@@ -6,7 +6,7 @@ __pycache__/
 *.pyc
 
 # Virtual environment
-venv/
+.venv/
 
 # Logs and output
 logs/

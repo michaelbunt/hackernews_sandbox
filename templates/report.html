@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>HN Summaries Report</title>
+</head>
+<body>
+  <h1>Latest HackerNews Summaries</h1>
+  <ul>
+    {% for post in posts %}
+      <li>
+        <a href="{{ post.url }}" target="_blank">{{ post.title }}</a>
+        &mdash; {{ post.points }} pts, {{ post.comments }} comments
+        <br>
+        <small>Summarized at {{ post.created_at }}</small>
+        <p>{{ post.summary }}</p>
+      </li>
+    {% endfor %}
+  </ul>
+</body>
+</html>

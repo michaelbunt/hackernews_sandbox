@@ -5,7 +5,7 @@ import logging
 import argparse
 from datetime import datetime
 from config import POST_PERMALINK
-from fetch import fetch_post_details, fetch_post_ids, fetch_article_text, fetch_post_metadata
+from fetch import fetch_post_ids, fetch_article_text, fetch_post_metadata
 from summarize import summarize_text
 from utils import refresh_output_file, update_output_file
 from agent import SummarizerAgent

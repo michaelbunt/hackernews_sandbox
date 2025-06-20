@@ -1,5 +1,6 @@
 #db.py
 import sqlite3
+import logging
 from pathlib import Path
 
 DB_PATH = Path("posts.db")

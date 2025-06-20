@@ -1,0 +1,6 @@
+fastapi
+jinja2
+uvicorn
+beautifulsoup4
+requests
+openai
